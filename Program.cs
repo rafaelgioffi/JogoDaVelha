@@ -101,24 +101,29 @@
         }
         static void WinCheck() //Vai checar se há a vitória de um dos jogadores. (X ou O)
         {
-            for (int i = 0; i < 3; i++)
+            List<char> Players = new List<char> {'X', 'O'};            
+            
+            foreach (char p in Players) 
             {
-                if (board[i, 0] == CurrentPlayer && board[i, 1] == CurrentPlayer && board[i, 2] == CurrentPlayer ||
-                    board[0, i] == CurrentPlayer && board[1, i] == CurrentPlayer && board[2, 1] == CurrentPlayer)
-                // Isso verifica se o jogador atual tem três símbolos consecutivos na mesma linha ou coluna.
+                for (int i = 0; i < 3; i++)
+                {
+                    if (board[i, 0] == p && board[i, 1] == p && board[i, 2] == p ||
+                        board[0, i] == p && board[1, i] == p && board[2, i] == p)
+                    // Isso verifica se o jogador atual tem três símbolos consecutivos na mesma linha ou coluna.
+                    {
+                        ShowBoard();
+                        Console.WriteLine("\nJogador " + p + " venceu!!"); //Se uma dessas condições for verdadeira, significa que o jogador atual venceu o jogo. O tabuleiro é exibido e uma mensagem de vitória é mostrada.
+                        ActiveGame = false;
+                        break;
+                    }
+                }
+                if (board[0, 0] == p && board[1, 1] == p && board[2, 2] == p || //Essa parte vai verificar as diagonais e se houver um vencedor, faz o mesmo que descrito acima.
+                    board[0, 2] == p && board[1, 1] == p && board[2, 0] == p)
                 {
                     ShowBoard();
-                    Console.WriteLine("Jogador " + CurrentPlayer + " venceu!!"); //Se uma dessas condições for verdadeira, significa que o jogador atual venceu o jogo. O tabuleiro é exibido e uma mensagem de vitória é mostrada.
+                    Console.WriteLine("\nJogador " + p + " venceu!!");
                     ActiveGame = false;
-                    break;
                 }
-            }
-            if (board[0, 0] == CurrentPlayer && board[1, 1] == CurrentPlayer && board[2, 2] == CurrentPlayer || //Essa parte vai verificar as diagonais e se houver um vencedor, faz o mesmo que descrito acima.
-                board[0, 2] == CurrentPlayer && board[1, 1] == CurrentPlayer && board[2, 0] == CurrentPlayer)
-            {
-                ShowBoard();
-                Console.WriteLine("Jogador " + CurrentPlayer + " venceu!!");
-                ActiveGame = false;
             }
         }
         static void DrawCheck() //Vai verificar se o jogo termina em empate.
