@@ -102,9 +102,9 @@
         {
             return board[line, column] == ' '; // Retorna true se a posição especificada estiver vazia. 
         }
-        static bool WinCheck(/*bool isAI*/) //Vai checar se há a vitória de um dos jogadores. (X ou O)
+        static bool WinCheck(bool isAI = false) //Vai checar se há a vitória de um dos jogadores. (X ou O)
         {
-            //char player = isAI ? 'O' : CurrentPlayer;
+            char player = isAI ? 'O' : CurrentPlayer;
 
             List<char> Players = new List<char> { 'X', 'O' };
 
@@ -133,12 +133,12 @@
             }
             return false;
         }
-        static void DrawCheck() //Vai verificar se o jogo termina em empate.
+        static bool DrawCheck() //Vai verificar se o jogo termina em empate.
         {
             if (!ActiveGame) //Verifica se o jogo já está encerrado e acaba por aqui sem fazer mais verificações.
-                return;
+                return false;
 
-            bool Draw = true;
+            bool Draw = true;            
 
             for (int i = 0; i < 3; i++) // Esses dois loops vão servir para verificar se ainda há lugares vazios. Se houver, o programa entende que o jogo ainda não acabou.
             {
@@ -158,6 +158,8 @@
                 Console.WriteLine("O jogo empatou!");
                 ActiveGame = false;
             }
+
+            return Draw;
         }
 
         static int MelhorJogada()
